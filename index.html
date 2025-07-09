@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lead Time Request Calculator</title>
+    <style>
+        /* Page reset and font setup */
+        body {
+            font-family: 'Helvetica Neue', sans-serif;
+            background-color: #f0f4f8;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* Calculator container */
+        .calculator {
+            background: #ffffff;
+            padding: 24px;
+            border-radius: 14px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 420px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 24px;
+            color: #333;
+        }
+
+        label {
+            font-weight: 600;
+            display: block;
+            margin-bottom: 6px;
+            margin-top: 12px;
+            color: #444;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+
+        .output {
+            background: #eaf4ff;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-left: 5px solid #2e86de;
+            border-radius: 6px;
+            color: #222;
+            font-weight: 500;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="calculator">
+        <h2>Lead Time Request Calculator</h2>
+
+        <!-- Six Month Consumption Input -->
+        <label for="sixMonthConsumption">6 Months Consumption</label>
+        <input type="number" id="sixMonthConsumption" placeholder="Enter total for 6 months">
+
+        <!-- Remaining Balance Input -->
+        <label for="remainingBalance">Remaining Balance</label>
+        <input type="number" id="remainingBalance" placeholder="Enter current stock">
+
+        <!-- Output Fields -->
+        <div class="output" id="tenPercent">10% of 6 Months Consumption: -</div>
+        <div class="output" id="leadTime">Lead Time: -</div>
+        <div class="output" id="requestAmount">Request Amount: -</div>
+        <div class="output" id="finalRequest">Final Request: -</div>
+    </div>
+
+    <script>
+        // Input fields
+        const sixMonthInput = document.getElementById('sixMonthConsumption');
+        const remainingInput = document.getElementById('remainingBalance');
+
+        // Output fields
+        const tenPercentOutput = document.getElementById('tenPercent');
+        const leadTimeOutput = document.getElementById('leadTime');
+        const requestAmountOutput = document.getElementById('requestAmount');
+        const finalRequestOutput = document.getElementById('finalRequest');
+
+        // Function to calculate and update results
+        function calculate() {
+            const sixMonth = parseFloat(sixMonthInput.value) || 0;
+            const remaining = parseFloat(remainingInput.value) || 0;
+
+            const tenPercent = sixMonth / 10;
+            const leadTime = (tenPercent / 6) * 2;
+            const requestAmount = sixMonth + tenPercent + leadTime;
+            const finalRequest = requestAmount - remaining;
+
+            tenPercentOutput.textContent = `10% of 6 Months Consumption: ${tenPercent.toFixed(2)}`;
+            leadTimeOutput.textContent = `Lead Time: ${leadTime.toFixed(2)}`;
+            requestAmountOutput.textContent = `Request Amount: ${requestAmount.toFixed(2)}`;
+            finalRequestOutput.textContent = `Final Request: ${finalRequest.toFixed(2)}`;
+        }
+
+        // Event listeners
+        sixMonthInput.addEventListener('input', calculate);
+        remainingInput.addEventListener('input', calculate);
+    </script>
+</body>
+
+</html>
